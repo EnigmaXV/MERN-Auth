@@ -1,37 +1,97 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchAuth } from "../utils/fetchAuth";
+import { toast } from "react-hot-toast";
 
 const Form = () => {
+  const queryClient = useQueryClient();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const user = { name, email, password };
+    signup(user);
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const { mutate: signup } = useMutation({
+    mutationFn: async (user) => {
+      return await toast.promise(
+        fetchAuth.post("/signup", user),
+        {
+          loading: "Creating your account...",
+          success: (res) => `Welcome, ${res.data.user.name}! 🎉`,
+          error: (err) =>
+            `Something went wrong: ${err.response?.data?.msg || err.message}`,
+        },
+        {
+          style: { minWidth: "250px" },
+          success: {
+            duration: 5000,
+            icon: "✅",
+          },
+        }
+      );
+    },
+    onSuccess: () => {
+      console.log("User created successfully");
+      queryClient.invalidateQueries(["user"]);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   return (
     <StyledWrapper>
-      <form className="form">
+      <form onSubmit={handleSubmit} className="form">
         <p className="title">Register </p>
         <p className="message">Signup now and get full access to our app. </p>
-        <div className="flex">
-          <label>
-            <input className="input" type="text" placeholder required />
-            <span>Firstname</span>
-          </label>
-          <label>
-            <input className="input" type="text" placeholder required />
-            <span>Lastname</span>
-          </label>
-        </div>
+
         <label>
-          <input className="input" type="email" placeholder required />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="input"
+            type="text"
+            placeholder
+            required
+          />
+          <span>Name</span>
+        </label>
+
+        <label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input"
+            type="email"
+            placeholder
+            required
+          />
           <span>Email</span>
         </label>
         <label>
-          <input className="input" type="password" placeholder required />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input"
+            type="password"
+            placeholder
+            required
+          />
           <span>Password</span>
         </label>
-        <label>
-          <input className="input" type="password" placeholder required />
-          <span>Confirm password</span>
-        </label>
+
         <button className="submit">Submit</button>
         <p className="signin">
-          Already have an account ? <a href="#">Signin</a>{" "}
+          Already have an account ? <a href="#">Sign in</a>{" "}
         </p>
       </form>
     </StyledWrapper>
