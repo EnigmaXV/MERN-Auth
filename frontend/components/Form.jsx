@@ -31,7 +31,7 @@ const Form = () => {
         </label>
         <button className="submit">Submit</button>
         <p className="signin">
-          Already have an acount ? <a href="#">Signin</a>{" "}
+          Already have an account ? <a href="#">Signin</a>{" "}
         </p>
       </form>
     </StyledWrapper>
