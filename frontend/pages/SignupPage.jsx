@@ -41,7 +41,7 @@ const SignupPage = () => {
       queryClient.invalidateQueries(["user"]);
     },
     onError: (error) => {
-      console.log(error);
+      console.log(error + "⛔️");
     },
   });
 
