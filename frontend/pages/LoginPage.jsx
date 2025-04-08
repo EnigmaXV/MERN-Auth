@@ -39,7 +39,7 @@ const LoginPage = () => {
       queryClient.invalidateQueries(["user"]);
     },
     onError: (error) => {
-      console.log(error.message);
+      console.log(error + "⛔️");
     },
   });
 
