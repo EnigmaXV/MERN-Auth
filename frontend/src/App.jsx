@@ -4,6 +4,7 @@ import Pattern from "../components/Pattern";
 import { Routes, Route } from "react-router-dom";
 import SignupPage from "../pages/SignupPage";
 import { Toaster } from "react-hot-toast";
+import LoginPage from "../pages/LoginPage";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Pattern />
       <Routes>
         <Route index element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
       <Toaster />
     </PageWrapper>
