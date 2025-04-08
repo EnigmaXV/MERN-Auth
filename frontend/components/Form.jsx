@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { FaUser } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import PasswordStrengthMeter from "./PasswordStrengthMeter";
 
 const Form = ({
   handleSubmit,
@@ -31,7 +35,9 @@ const Form = ({
               placeholder
               required
             />
-            <span>Name</span>
+            <span>
+              <FaUser /> Name
+            </span>
           </label>
         )}
 
@@ -44,7 +50,9 @@ const Form = ({
             placeholder
             required
           />
-          <span>Email</span>
+          <span>
+            <MdEmail /> Email
+          </span>
         </label>
         <label>
           <input
@@ -55,13 +63,17 @@ const Form = ({
             placeholder
             required
           />
-          <span>Password</span>
+          <span>
+            {" "}
+            <FaLock /> Password
+          </span>
         </label>
 
         <button className="submit">Submit</button>
         <p className="signin">
           {footerText} <a href={`${footerLinkHref}`}>{footerLink}</a>{" "}
         </p>
+        {title === "Register" && <PasswordStrengthMeter password={password} />}
       </form>
     </StyledWrapper>
   );
