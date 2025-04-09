@@ -51,7 +51,7 @@ const ResetPasswordPage = () => {
         <label htmlFor="newPassword">New password:</label>
         <input
           required
-          placeholder="Enter your newPassword address"
+          placeholder="Enter your new password"
           name="newPassword"
           id="newPassword"
           type="newPassword"
