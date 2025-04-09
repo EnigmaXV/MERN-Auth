@@ -4,6 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import PasswordStrengthMeter from "./PasswordStrengthMeter";
+import { NavLink } from "react-router-dom";
 
 const Form = ({
   handleSubmit,
@@ -71,8 +72,14 @@ const Form = ({
 
         <button className="submit">Submit</button>
         <p className="signin">
-          {footerText} <a href={`${footerLinkHref}`}>{footerLink}</a>{" "}
+          {footerText} <NavLink to={footerLinkHref}>{footerLink}</NavLink>
         </p>
+        {title === "Login" && (
+          <p className="signin">
+            Forgot password?{" "}
+            <NavLink to="/forgot-password">Reset your password</NavLink>
+          </p>
+        )}
         {title === "Register" && <PasswordStrengthMeter password={password} />}
       </form>
     </StyledWrapper>
