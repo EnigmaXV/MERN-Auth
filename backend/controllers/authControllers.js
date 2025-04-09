@@ -23,7 +23,7 @@ const signup = async (req, res) => {
       });
     }
 
-    const verificationToken = Math.floor(100000 + Math.random() * 900000);
+    const verificationToken = Math.floor(100000 + Math.random() * 900000); // 6 digits number
 
     const user = await User.create({
       email,
@@ -147,7 +147,7 @@ const forgotPassword = async (req, res) => {
     }
     let resetPassword = crypto.randomBytes(32).toString("hex");
     user.resetPasswordToken = resetPassword;
-    user.resetPasswordExpiresAt = Date.now() + 1 * 60 * 1000; // 1 minute
+    user.resetPasswordExpiresAt = Date.now() + 15 * 60 * 1000; // 15 minutes
     await user.save();
 
     let resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetPassword}`;
