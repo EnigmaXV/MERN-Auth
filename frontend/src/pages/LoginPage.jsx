@@ -1,12 +1,15 @@
 import React from "react";
 import Form from "../components/Form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchAuth } from "../utils/fetchAuth";
+import { fetchAuth } from "../../utils/fetchAuth";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
+import { toastStyle } from "../configs/toastConfigs";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { mutate: login } = useMutation({
@@ -17,26 +20,17 @@ const LoginPage = () => {
           loading: "Logging you in...",
           success: (res) => `Welcome back, ${res.data.user.name}!`,
           error: (err) =>
-            `Something went wrong: ${err.response?.data?.msg || err.message}`,
+            `Something went wrong: ${
+              err.response?.data?.message || err.message
+            }`,
         },
-        {
-          style: {
-            minWidth: "250px",
-            backgroundColor: "#333",
-            color: "#fff",
-            borderRadius: "5px",
-            padding: "10px",
-          },
-          success: {
-            duration: 5000,
-            icon: "✅",
-          },
-        }
+        toastStyle
       );
     },
     onSuccess: () => {
       console.log("User logged in successfully");
       queryClient.invalidateQueries(["user"]);
+      navigate("/home");
     },
     onError: (error) => {
       console.log(error + "⛔️");
