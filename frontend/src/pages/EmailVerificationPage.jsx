@@ -78,7 +78,7 @@ const EmailVerificationPage = () => {
         placeholder="-"
         autoFocus
       />
-      <SubmitButton onHandleClick={handleSubmit} c />
+      <SubmitButton onHandleClick={handleSubmit} />
     </StyledWrapper>
   );
 };
